@@ -224,10 +224,11 @@ public:
             cout << "List is empty." << endl;
             return;
         }
-        cout << "resulting line: \n"; // Moved here to print before the loop to avoid printing it multiple times.
+        cout << "---Current line----\n";
         while (current)
         {
             cout << current->name << " \n";
+            cout << "Drink order: " << current->drinkOrder << "\n\n";
             current = current->next;
         }
         cout << endl;
@@ -271,7 +272,9 @@ public:
 
 int main()
 {
-    vector<string> names = {
+    const int NUM_NAMES = 50;
+    const int NUM_DRINKS = 10;
+    array<string, 50> names = {
         "Liam", "Olivia", "Noah", "Emma", "Oliver",
         "Ava", "Elijah", "Charlotte", "William", "Sophia",
         "James", "Amelia", "Benjamin", "Isabella", "Lucas",
@@ -283,13 +286,27 @@ int main()
         "Aiden", "Aria", "Owen", "Penelope", "Samuel",
         "Chloe", "Matthew", "Layla", "David", "Milani"};
 
-    array<string, 10> drinks = {
+    array<string, NUM_DRINKS> drinks = {
         "Espresso", "Latte", "Cappuccino", "Americano", "Mocha",
         "Macchiato", "Flat White", "Cold Brew", "Iced Coffee", "Frappuccino"};
 
     srand(time(0));
     CoffeeBooth booth;
-    //Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
-
+    int joinProbability = 50; // 50% chance of joining the line
+    // Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
+    cout << "Initializing coffee booth line\n\n";
+    for (int i = 0; i < 3; ++i)
+    {
+        string randomName = names[rand() % names.size()];
+        string randomDrink = drinks[rand() % drinks.size()];
+        booth.push_back(randomName, randomDrink);
+    }
+    booth.print();
+    cout << "Beginning 10 rounds of coffee booth simulation\n\n";
+        for (int i = 0; i < 10; ++i)
+        {
+            cout << "Round " << i + 1 << ":\n";
+            
+        }
     return 0;
 }
