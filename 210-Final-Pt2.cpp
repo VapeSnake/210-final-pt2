@@ -225,9 +225,11 @@ public:
         while (current)
         {
             cout << "[Coffee] " << current->name << " \n";
-            cout << "Drink order: " << current->drinkOrder << "\n\n";
+            cout << "Drink order: " << current->drinkOrder << "\n";
             current = current->next;
         }
+        if (!head)
+            cout << "No one is in coffee line." << endl;
         cout << endl;
     }
 
@@ -278,7 +280,7 @@ struct BraceletBooth
     string braceletName;
     string braceletColor;
 };
-
+// Milestone 5 Complete. Used queue for last data structure for booth of sodas.
 struct SodaBooth
 {
     string sodaName;
