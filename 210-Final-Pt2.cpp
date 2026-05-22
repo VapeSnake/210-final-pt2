@@ -221,7 +221,7 @@ public:
     {
         Node *current = head;
 
-        cout << "---Current line----\n";
+        cout << "---Current coffee line---\n";
         while (current)
         {
             cout << "[Coffee] " << current->name << " \n";
@@ -273,11 +273,18 @@ struct MuffinBooth
     string muffinFlavor;
 };
 
+struct BraceletBooth
+{
+    string braceletName;
+    string braceletColor;
+};
+
 int main()
 {
     const int NUM_NAMES = 50;
     const int NUM_DRINKS = 10;
     const int NUM_MUFFINS = 4;
+    const int NUM_BRACELETS = 5;
     array<string, 50> names = {
         "Liam", "Olivia", "Noah", "Emma", "Oliver",
         "Ava", "Elijah", "Charlotte", "William", "Sophia",
@@ -297,11 +304,15 @@ int main()
     array<string, NUM_MUFFINS> muffins = {
         "Blueberry", "Chocolate Chip", "Banana Nut", "Cinnamon"};
 
+    array<string, NUM_BRACELETS> bracelets = {
+        "Red", "Blue", "Green", "Yellow", "Purple"};
+
     srand(time(0));
     CoffeeBooth booth;
     deque<MuffinBooth> muffinBooth;
+    vector<BraceletBooth> braceletBooth;
     // Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
-    cout << "Initializing coffee and muffinbooth lines\n\n";
+    cout << "Initializing coffee, muffin, and bracelet booth lines\n\n";
     for (int i = 0; i < 3; ++i)
     {
         string randomName = names[rand() % names.size()];
@@ -312,12 +323,24 @@ int main()
         muffinCustomer.customerName = names[rand() % names.size()];
         muffinCustomer.muffinFlavor = muffins[rand() % muffins.size()];
         muffinBooth.push_back(muffinCustomer);
+
+        BraceletBooth braceletCustomer;
+        braceletCustomer.braceletName = names[rand() % names.size()];
+        braceletCustomer.braceletColor = bracelets[rand() % bracelets.size()];
+        braceletBooth.push_back(braceletCustomer);
     }
     booth.print();
+    cout << "---Current muffin line---\n";
     for (const auto &mCustomer : muffinBooth)
     {
         cout << "[Muffin]" << mCustomer.customerName << endl;
         cout << "Muffin order: " << mCustomer.muffinFlavor << "\n\n";
+    }
+    cout << "---Current bracelet line---\n";
+    for (const auto& bCustomer : braceletBooth)
+    {
+        cout << "[Bracelet] " << bCustomer.braceletName << endl;
+        cout << "Bracelet color: " << bCustomer.braceletColor << "\n\n";
     }
     // Milestone 2 Complete. List initialized with 3 random customers+drinks, and simulated 10 rounds with customers joining and being served.
     cout << "Beginning 10 rounds of coffee and muffin booth simulation\n\n";
@@ -333,10 +356,11 @@ int main()
             cout << "Serving " << booth.get_head_name() << " their " << booth.get_head_drink() << ".\n";
             booth.pop_front();
         }
-
+        cout << endl;
+        cout << "---Current muffin line---\n";
         if (muffinBooth.empty())
         {
-            cout << "There is no one in muffin line to serve.\n";
+            cout << "There is no one in muffin line to serve.\n\n";
         }
         else
         {
@@ -349,7 +373,7 @@ int main()
             string randomName = names[rand() % names.size()];
             string randomDrink = drinks[rand() % drinks.size()];
             booth.push_back(randomName, randomDrink);
-            cout << randomName << " has joined the line with a " << randomDrink << ".\n";
+            cout << randomName << " has joined the coffee line with a " << randomDrink << ".\n";
         }
 
         if (rand() % 2 == 0)
