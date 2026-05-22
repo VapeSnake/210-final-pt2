@@ -219,11 +219,7 @@ public:
     void print()
     {
         Node *current = head;
-        if (!current)
-        {
-            cout << "List is empty." << endl;
-            return;
-        }
+
         cout << "---Current line----\n";
         while (current)
         {
@@ -292,7 +288,6 @@ int main()
 
     srand(time(0));
     CoffeeBooth booth;
-    int joinProbability = 50; // 50% chance of joining the line
     // Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
     cout << "Initializing coffee booth line\n\n";
     for (int i = 0; i < 3; ++i)
@@ -302,11 +297,29 @@ int main()
         booth.push_back(randomName, randomDrink);
     }
     booth.print();
+    // Milestone 2 Complete. List initialized with 3 random customers+drinks, and simulated 10 rounds with customers joining and being served.
     cout << "Beginning 10 rounds of coffee booth simulation\n\n";
         for (int i = 0; i < 10; ++i)
         {
             cout << "Round " << i + 1 << ":\n";
-            
-        }
+            if (booth.is_empty())
+            {
+                cout << "There is no one in line to serve.\n";
+            }
+            else
+            {
+                cout << "Serving " << booth.get_head_name() << " their " << booth.get_head_drink() << ".\n";
+                booth.pop_front();
+            }
+
+            if (rand() % 2 == 0)
+            {
+                string randomName = names[rand() % names.size()];
+                string randomDrink = drinks[rand() % drinks.size()];
+                booth.push_back(randomName, randomDrink);
+                cout << randomName << " has joined the line with a " << randomDrink << ".\n";
+            }
+            booth.print();
+    }
     return 0;
 }
