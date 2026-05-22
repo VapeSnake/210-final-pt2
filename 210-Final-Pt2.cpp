@@ -266,7 +266,7 @@ public:
         return "";
     }
 };
-
+// Milestone 3 Complete. MuffinBooth struct used in <deque> to simulate muffin booth. Added array of limited muffin flavors.
 struct MuffinBooth
 {
     string customerName;
