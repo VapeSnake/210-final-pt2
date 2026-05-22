@@ -224,7 +224,7 @@ public:
         cout << "---Current line----\n";
         while (current)
         {
-            cout << current->name << " \n";
+            cout << "[Coffee] " << current->name << " \n";
             cout << "Drink order: " << current->drinkOrder << "\n\n";
             current = current->next;
         }
@@ -267,7 +267,8 @@ public:
     }
 };
 
-struct MuffinBooth{
+struct MuffinBooth
+{
     string customerName;
     string muffinFlavor;
 };
@@ -300,7 +301,7 @@ int main()
     CoffeeBooth booth;
     deque<MuffinBooth> muffinBooth;
     // Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
-    cout << "Initializing coffee booth line\n\n";
+    cout << "Initializing coffee and muffinbooth lines\n\n";
     for (int i = 0; i < 3; ++i)
     {
         string randomName = names[rand() % names.size()];
@@ -313,29 +314,65 @@ int main()
         muffinBooth.push_back(muffinCustomer);
     }
     booth.print();
+    for (const auto &mCustomer : muffinBooth)
+    {
+        cout << "[Muffin]" << mCustomer.customerName << endl;
+        cout << "Muffin order: " << mCustomer.muffinFlavor << "\n\n";
+    }
     // Milestone 2 Complete. List initialized with 3 random customers+drinks, and simulated 10 rounds with customers joining and being served.
-    cout << "Beginning 10 rounds of coffee booth simulation\n\n";
-        for (int i = 0; i < 10; ++i)
+    cout << "Beginning 10 rounds of coffee and muffin booth simulation\n\n";
+    for (int i = 0; i < 10; ++i)
+    {
+        cout << "Round " << i + 1 << ":\n";
+        if (booth.is_empty())
         {
-            cout << "Round " << i + 1 << ":\n";
-            if (booth.is_empty())
-            {
-                cout << "There is no one in line to serve.\n";
-            }
-            else
-            {
-                cout << "Serving " << booth.get_head_name() << " their " << booth.get_head_drink() << ".\n";
-                booth.pop_front();
-            }
+            cout << "There is no one in coffee line to serve.\n";
+        }
+        else
+        {
+            cout << "Serving " << booth.get_head_name() << " their " << booth.get_head_drink() << ".\n";
+            booth.pop_front();
+        }
 
-            if (rand() % 2 == 0)
+        if (muffinBooth.empty())
+        {
+            cout << "There is no one in muffin line to serve.\n";
+        }
+        else
+        {
+            cout << "Serving " << muffinBooth.front().customerName << " their " << muffinBooth.front().muffinFlavor << " muffin. \n";
+            muffinBooth.pop_front();
+        }
+
+        if (rand() % 2 == 0)
+        {
+            string randomName = names[rand() % names.size()];
+            string randomDrink = drinks[rand() % drinks.size()];
+            booth.push_back(randomName, randomDrink);
+            cout << randomName << " has joined the line with a " << randomDrink << ".\n";
+        }
+
+        if (rand() % 2 == 0)
+        {
+            MuffinBooth muffinCustomer;
+            muffinCustomer.customerName = names[rand() % names.size()];
+            muffinCustomer.muffinFlavor = muffins[rand() % muffins.size()];
+            muffinBooth.push_back(muffinCustomer);
+            cout << muffinCustomer.customerName << " has joined the muffin line with a " << muffinCustomer.muffinFlavor << " muffin.\n";
+        }
+        booth.print();
+        if (!muffinBooth.empty())
+        {
+            for (const auto &mCustomer : muffinBooth)
             {
-                string randomName = names[rand() % names.size()];
-                string randomDrink = drinks[rand() % drinks.size()];
-                booth.push_back(randomName, randomDrink);
-                cout << randomName << " has joined the line with a " << randomDrink << ".\n";
+                cout << "[Muffin]" << mCustomer.customerName << endl;
+                cout << "Muffin order: " << mCustomer.muffinFlavor << "\n\n";
             }
-            booth.print();
+        }
+        else
+        {
+            cout << "No one is in the muffin line.\n";
+        }
     }
     return 0;
 }
