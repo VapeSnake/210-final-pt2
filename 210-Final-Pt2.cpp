@@ -323,7 +323,7 @@ int main()
     vector<BraceletBooth> braceletBooth;
     queue<SodaBooth> sodaBooth;
     // Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
-    cout << "Initializing coffee, muffin, and bracelet booth lines\n\n";
+    cout << "Initializing coffee, muffin, bracelet, and soda booth lines\n\n";
     for (int i = 0; i < 3; ++i)
     {
         string randomName = names[rand() % names.size()];
@@ -345,20 +345,21 @@ int main()
         sodaCustomer.sodaFlavor = sodas[rand() % sodas.size()];
         sodaBooth.push(sodaCustomer);
     }
+    cout << "---Current Coffee line---\n";
     booth.print();
-    cout << "---Current muffin line---\n";
+    cout << "---Current Muffin line---\n";
     for (const auto &mCustomer : muffinBooth)
     {
         cout << "[Muffin]" << mCustomer.customerName << endl;
         cout << "Muffin order: " << mCustomer.muffinFlavor << "\n\n";
     }
-    cout << "---Current bracelet line---\n";
+    cout << "---Current Bracelet line---\n";
     for (const auto& bCustomer : braceletBooth)
     {
         cout << "[Bracelet] " << bCustomer.braceletName << endl;
         cout << "Bracelet color: " << bCustomer.braceletColor << "\n\n";
     }
-    cout << "---Current soda line---\n";
+    cout << "---Current Soda line---\n";
     queue<SodaBooth> tempSodaBooth = sodaBooth;
     while (!tempSodaBooth.empty())
     {
@@ -387,7 +388,7 @@ int main()
         }
         else
         {
-            cout << "Serving " << muffinBooth.front().customerName << " their " << muffinBooth.front().muffinFlavor << " muffin. \n";
+            cout << "Serving " << muffinBooth.front().customerName << " their " << muffinBooth.front().muffinFlavor << " muffin.\n";
             muffinBooth.pop_front();
         }
 
@@ -397,7 +398,7 @@ int main()
         }
         else
         {
-            cout << "Serving " << braceletBooth.front().braceletName << " their " << braceletBooth.front().braceletColor << " bracelet. \n\n";
+            cout << "Serving " << braceletBooth.front().braceletName << " their " << braceletBooth.front().braceletColor << " bracelet. \n";
             braceletBooth.erase(braceletBooth.begin());
         }
 
@@ -411,7 +412,7 @@ int main()
             sodaBooth.pop();
         }
 
-        }
+        
         if (rand() % 2 == 0)
         {
             string randomName = names[rand() % names.size()];
@@ -437,10 +438,16 @@ int main()
             braceletBooth.push_back(braceletCustomer);
             cout << braceletCustomer.braceletName << " has joined the bracelet line for a " << braceletCustomer.braceletColor << " bracelet.\n";
         }
-        
-        cout << "---Current coffee line---\n";
+        if (rand() % 2 == 0)
+        {
+            SodaBooth sodaCustomer;
+            sodaCustomer.sodaName = names[rand() % names.size()];
+            sodaCustomer.sodaFlavor = sodas[rand() % sodas.size()];
+            sodaBooth.push(sodaCustomer);
+        }
+        cout << "---Current Coffee line---\n";
         booth.print();
-        cout << "---Current muffin line---\n";
+        cout << "---Current Muffin line---\n";
         if (!muffinBooth.empty())
         {
             for (const auto &mCustomer : muffinBooth)
@@ -453,7 +460,7 @@ int main()
         {
             cout << "No one is in the muffin line.\n";
         }
-        cout << "---Current bracelet line---\n";
+        cout << "---Current Bracelet line---\n";
         if (!braceletBooth.empty())
         {
             for (const auto& bCustomer : braceletBooth)
@@ -465,6 +472,21 @@ int main()
         else
         {
             cout << "No one is in the bracelet line.\n";
+        }
+        cout << "---Current Soda line.---\n";
+        if (!sodaBooth.empty())
+        {
+            tempSodaBooth = sodaBooth;
+            while (!tempSodaBooth.empty())
+            {
+                cout << "[Soda] " << tempSodaBooth.front().sodaName << endl;
+                cout << "Soda flavor: " << tempSodaBooth.front().sodaFlavor << "\n\n";
+                tempSodaBooth.pop();
+            }
+        }
+        else
+        {
+            cout << "No one is in the soda line.\n";
         }
     }
     return 0;
