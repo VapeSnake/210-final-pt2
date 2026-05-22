@@ -5,6 +5,7 @@
 #include <ctime>
 #include <vector>
 #include <array>
+#include <deque>
 using namespace std;
 
 // This class was used in midterm 2, and I think it would be a great idea to use again for this coffee booth program.
@@ -266,10 +267,16 @@ public:
     }
 };
 
+struct MuffinBooth{
+    string customerName;
+    string muffinFlavor;
+};
+
 int main()
 {
     const int NUM_NAMES = 50;
     const int NUM_DRINKS = 10;
+    const int NUM_MUFFINS = 4;
     array<string, 50> names = {
         "Liam", "Olivia", "Noah", "Emma", "Oliver",
         "Ava", "Elijah", "Charlotte", "William", "Sophia",
@@ -286,8 +293,12 @@ int main()
         "Espresso", "Latte", "Cappuccino", "Americano", "Mocha",
         "Macchiato", "Flat White", "Cold Brew", "Iced Coffee", "Frappuccino"};
 
+    array<string, NUM_MUFFINS> muffins = {
+        "Blueberry", "Chocolate Chip", "Banana Nut", "Cinnamon"};
+
     srand(time(0));
     CoffeeBooth booth;
+    deque<MuffinBooth> muffinBooth;
     // Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
     cout << "Initializing coffee booth line\n\n";
     for (int i = 0; i < 3; ++i)
@@ -295,6 +306,11 @@ int main()
         string randomName = names[rand() % names.size()];
         string randomDrink = drinks[rand() % drinks.size()];
         booth.push_back(randomName, randomDrink);
+
+        MuffinBooth muffinCustomer;
+        muffinCustomer.customerName = names[rand() % names.size()];
+        muffinCustomer.muffinFlavor = muffins[rand() % muffins.size()];
+        muffinBooth.push_back(muffinCustomer);
     }
     booth.print();
     // Milestone 2 Complete. List initialized with 3 random customers+drinks, and simulated 10 rounds with customers joining and being served.
