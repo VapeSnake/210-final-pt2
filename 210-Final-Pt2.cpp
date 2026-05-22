@@ -6,6 +6,7 @@
 #include <vector>
 #include <array>
 #include <deque>
+#include <queue>
 using namespace std;
 
 // This class was used in midterm 2, and I think it would be a great idea to use again for this coffee booth program.
@@ -278,12 +279,19 @@ struct BraceletBooth
     string braceletColor;
 };
 
+struct SodaBooth
+{
+    string sodaName;
+    string sodaFlavor;
+};
+
 int main()
 {
     const int NUM_NAMES = 50;
     const int NUM_DRINKS = 10;
     const int NUM_MUFFINS = 4;
     const int NUM_BRACELETS = 5;
+    const int NUM_SODAS = 8;
     array<string, 50> names = {
         "Liam", "Olivia", "Noah", "Emma", "Oliver",
         "Ava", "Elijah", "Charlotte", "William", "Sophia",
@@ -306,10 +314,14 @@ int main()
     array<string, NUM_BRACELETS> bracelets = {
         "Red", "Blue", "Green", "Yellow", "Purple"};
 
+    array<string, NUM_SODAS> sodas = {
+        "Coke", "Pepsi", "Sprite", "Fanta", "Dr Pepper", "Mountain Dew", "7 Up", "Ginger Ale"};
+
     srand(time(0));
     CoffeeBooth booth;
     deque<MuffinBooth> muffinBooth;
     vector<BraceletBooth> braceletBooth;
+    queue<SodaBooth> sodaBooth;
     // Milestone 1 Complete. Vector for names and array for drinks created. Doubly Linked list imported from midterm 2 and changed to include drinks.
     cout << "Initializing coffee, muffin, and bracelet booth lines\n\n";
     for (int i = 0; i < 3; ++i)
@@ -327,6 +339,11 @@ int main()
         braceletCustomer.braceletName = names[rand() % names.size()];
         braceletCustomer.braceletColor = bracelets[rand() % bracelets.size()];
         braceletBooth.push_back(braceletCustomer);
+
+        SodaBooth sodaCustomer;
+        sodaCustomer.sodaName = names[rand() % names.size()];
+        sodaCustomer.sodaFlavor = sodas[rand() % sodas.size()];
+        sodaBooth.push(sodaCustomer);
     }
     booth.print();
     cout << "---Current muffin line---\n";
@@ -340,6 +357,14 @@ int main()
     {
         cout << "[Bracelet] " << bCustomer.braceletName << endl;
         cout << "Bracelet color: " << bCustomer.braceletColor << "\n\n";
+    }
+    cout << "---Current soda line---\n";
+    queue<SodaBooth> tempSodaBooth = sodaBooth;
+    while (!tempSodaBooth.empty())
+    {
+        cout << "[Soda] " << tempSodaBooth.front().sodaName << endl;
+        cout << "Soda flavor: " << tempSodaBooth.front().sodaFlavor << "\n\n";
+        tempSodaBooth.pop();
     }
     // Milestone 2 Complete. List initialized with 3 random customers+drinks, and simulated 10 rounds with customers joining and being served.
     cout << "Beginning 10 rounds of vendor booths simulation\n\n";
@@ -376,6 +401,17 @@ int main()
             braceletBooth.erase(braceletBooth.begin());
         }
 
+        if (sodaBooth.empty())
+        {
+            cout << "There is no one in soda line to serve.\n\n";
+        }
+        else
+        {
+            cout << "Serving " << sodaBooth.front().sodaName << " their " << sodaBooth.front().sodaFlavor << " soda. \n\n";
+            sodaBooth.pop();
+        }
+
+        }
         if (rand() % 2 == 0)
         {
             string randomName = names[rand() % names.size()];
@@ -401,6 +437,7 @@ int main()
             braceletBooth.push_back(braceletCustomer);
             cout << braceletCustomer.braceletName << " has joined the bracelet line for a " << braceletCustomer.braceletColor << " bracelet.\n";
         }
+        
         cout << "---Current coffee line---\n";
         booth.print();
         cout << "---Current muffin line---\n";
