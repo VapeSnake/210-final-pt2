@@ -220,8 +220,7 @@ public:
     void print()
     {
         Node *current = head;
-
-        cout << "---Current coffee line---\n";
+;
         while (current)
         {
             cout << "[Coffee] " << current->name << " \n";
@@ -272,7 +271,7 @@ struct MuffinBooth
     string customerName;
     string muffinFlavor;
 };
-
+// Milestone 4 Complete. Using vector of BraceletBooth structs to simulate bracelet booth, with same features as other booths.
 struct BraceletBooth
 {
     string braceletName;
@@ -343,7 +342,7 @@ int main()
         cout << "Bracelet color: " << bCustomer.braceletColor << "\n\n";
     }
     // Milestone 2 Complete. List initialized with 3 random customers+drinks, and simulated 10 rounds with customers joining and being served.
-    cout << "Beginning 10 rounds of coffee and muffin booth simulation\n\n";
+    cout << "Beginning 10 rounds of vendor booths simulation\n\n";
     for (int i = 0; i < 10; ++i)
     {
         cout << "Round " << i + 1 << ":\n";
@@ -353,11 +352,10 @@ int main()
         }
         else
         {
-            cout << "Serving " << booth.get_head_name() << " their " << booth.get_head_drink() << ".\n";
+            cout << "Serving " << booth.get_head_name() << " their " << booth.get_head_drink() << ".";
             booth.pop_front();
         }
         cout << endl;
-        cout << "---Current muffin line---\n";
         if (muffinBooth.empty())
         {
             cout << "There is no one in muffin line to serve.\n\n";
@@ -366,6 +364,16 @@ int main()
         {
             cout << "Serving " << muffinBooth.front().customerName << " their " << muffinBooth.front().muffinFlavor << " muffin. \n";
             muffinBooth.pop_front();
+        }
+
+        if (braceletBooth.empty())
+        {
+            cout << "There is no one in bracelet line to serve.\n\n";
+        }
+        else
+        {
+            cout << "Serving " << braceletBooth.front().braceletName << " their " << braceletBooth.front().braceletColor << " bracelet. \n\n";
+            braceletBooth.erase(braceletBooth.begin());
         }
 
         if (rand() % 2 == 0)
@@ -384,7 +392,18 @@ int main()
             muffinBooth.push_back(muffinCustomer);
             cout << muffinCustomer.customerName << " has joined the muffin line with a " << muffinCustomer.muffinFlavor << " muffin.\n";
         }
+
+        if (rand() % 2 == 0)
+        {
+            BraceletBooth braceletCustomer;
+            braceletCustomer.braceletName = names[rand() % names.size()];
+            braceletCustomer.braceletColor = bracelets[rand() % bracelets.size()];
+            braceletBooth.push_back(braceletCustomer);
+            cout << braceletCustomer.braceletName << " has joined the bracelet line for a " << braceletCustomer.braceletColor << " bracelet.\n";
+        }
+        cout << "---Current coffee line---\n";
         booth.print();
+        cout << "---Current muffin line---\n";
         if (!muffinBooth.empty())
         {
             for (const auto &mCustomer : muffinBooth)
@@ -396,6 +415,19 @@ int main()
         else
         {
             cout << "No one is in the muffin line.\n";
+        }
+        cout << "---Current bracelet line---\n";
+        if (!braceletBooth.empty())
+        {
+            for (const auto& bCustomer : braceletBooth)
+            {
+                cout << "[Bracelet] " << bCustomer.braceletName << endl;
+                cout << "Bracelet color: " << bCustomer.braceletColor << "\n\n";
+            }
+        }
+        else
+        {
+            cout << "No one is in the bracelet line.\n";
         }
     }
     return 0;
